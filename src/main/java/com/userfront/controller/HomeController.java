@@ -1,5 +1,6 @@
 package com.userfront.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -7,9 +8,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.userfront.domain.User;
+import com.userfront.service.UserService;
 
 @Controller
 public class HomeController {
+	
+	@Autowired
+	private UserService userService;
 	
 	@RequestMapping("/")
 	public String home() {
@@ -30,9 +35,22 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public void signupPost(@ModelAttribute("user") User user, Model model) {
+	public String signupPost(@ModelAttribute("user") User user, Model model) {
 		
-		
-		//return "redirect://";
+		if(userService.checkUserExists(user.getUsername(), user.getEmail())) {
+			
+			if(userService.checkUsernameExists(user.getUsername())) {
+				model.addAttribute("usernameExists", true	);
+			}
+			
+			if(userService.checkEmailExists(user.getEmail())) {
+				model.addAttribute("emailExists", true);
+			}
+			
+			return "signup";
+		} else {
+			userService.save(user);
+			return "redirect:/";
+		}
 	}
 }
