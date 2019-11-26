@@ -1,1 +1,3 @@
-# A application build on Spring, Hibernate and Angular 2
+## An Online Banking system build on Spring mvc, Spring Security and Hibernate
+
+Git repo of AdminPortal of this OnlineBanking system: https://github.com/naqib83/AdminPortalForOnlineBanking
