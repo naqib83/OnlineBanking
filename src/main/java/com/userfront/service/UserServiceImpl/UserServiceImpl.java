@@ -91,5 +91,10 @@ public class UserServiceImpl implements UserService{
 		}
 		return false;
 	}
+	@Override
+	public User saveUser(User user) {
+		return userDao.save(user);
+		
+	}
 	
 }
